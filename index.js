@@ -100,6 +100,14 @@ app.put('/user', async (req, res) => {
     const result = await userCollection.updateOne(filter, updateDoc, options);
     res.json(result);
 });
+//put api for update admin role
+app.put('/user/admin', async (req, res) => {
+    const user = req.body;
+    const filter = { email: user.email };
+    const updateDoc = { $set: { role: 'admin' } };
+    const result = await userCollection.updateOne(filter, updateDoc);
+ res.json(result);
+})
 
     } finally {
     //   await client.close();
