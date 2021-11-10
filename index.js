@@ -51,17 +51,24 @@ async function run() {
   const order = await cursor.toArray();
   res.send(order);
 });
-// email filter
-app.get('/order', async (req, res) => {
-    let query = {}
-    const email = req.query.email;
-    if(email){
-        query = {email: email}
-    }
-    const cursor = orderCollection.find(query);
-    const orders = await cursor.toArray();
-    res.json(orders);
-})
+// // email filter
+// app.get('/order', async (req, res) => {
+//     let query = {}
+//     const email = req.query.email;
+//     if(email){
+//         query = {email: email}
+//     }
+//     const cursor = orderCollection.find(query);
+//     const orders = await cursor.toArray();
+//     res.json(orders);
+// })
+//Delete api for ordercollection by id
+app.delete('/order/:id', async(req, res)=>{
+    const id = req.params.id;
+    const qurey = {_id: ObjectId(id)};
+    const result = await orderCollection.deleteOne(qurey)
+    res.json(result);
+  })
 
     } finally {
     //   await client.close();
