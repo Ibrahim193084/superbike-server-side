@@ -72,6 +72,23 @@ app.delete('/order/:id', async(req, res)=>{
     res.json(result);
   })
 
+//   put api for update status
+//Update api for update status
+app.put('/order/:id', async (req, res) => {
+    const id = req.params.id;
+    const filter = { _id: ObjectId(id) };
+    const options = { upsert: true };
+    const updateDoc = {
+        $set: {
+           status: "shipped"
+        },
+    };
+    const result = await orderCollection.updateOne(filter, updateDoc, options)
+    console.log('updating', id)
+    res.json(result)
+  })
+  
+
   //Post api for reviewcollection
   app.post('/review', async (req, res) => {
     const newReview = req.body;
