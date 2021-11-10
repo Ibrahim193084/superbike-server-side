@@ -22,6 +22,7 @@ async function run() {
       const database = client.db("superbike");
       const cycleCollection = database.collection("cycle");
       const orderCollection = database.collection("order")
+      const reviewCollection = database.collection("review")
        //Get api for cyclecollection
        app.get('/cycles', async(req, res)=>{
         const cursor = cycleCollection.find({});
@@ -69,6 +70,19 @@ app.delete('/order/:id', async(req, res)=>{
     const result = await orderCollection.deleteOne(qurey)
     res.json(result);
   })
+
+  //Post api for reviewcollection
+  app.post('/review', async (req, res) => {
+    const newReview = req.body;
+    const review = await reviewCollection.insertOne(newReview);
+    res.send(review)
+});
+//Get api for reviewcollection
+app.get('/review', async (req, res) =>{
+    const cursor = reviewCollection.find({});
+    const review = await cursor.toArray();
+    res.send(review);
+  });
 
     } finally {
     //   await client.close();
