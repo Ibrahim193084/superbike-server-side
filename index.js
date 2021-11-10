@@ -27,6 +27,13 @@ async function run() {
         const cycles = await cursor.toArray();
         res.send(cycles)
     })
+        //Get single api  for cycle collection
+        app.get('/cycles/:id', async (req, res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)}
+            const cycles = await cycleCollection.findOne(query)
+            res.send(cycles);
+        })
 
 
      
@@ -47,3 +54,7 @@ app.get('/',(req, res)=>{
 app.listen(port, ()=>{
     console.log('Assignment 12 server', port)
 })
+
+
+
+// https://arcane-hamlet-67437.herokuapp.com/
