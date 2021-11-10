@@ -23,6 +23,7 @@ async function run() {
       const cycleCollection = database.collection("cycle");
       const orderCollection = database.collection("order")
       const reviewCollection = database.collection("review")
+      const userCollection = database.collection("user")
        //Get api for cyclecollection
        app.get('/cycles', async(req, res)=>{
         const cursor = cycleCollection.find({});
@@ -83,6 +84,22 @@ app.get('/review', async (req, res) =>{
     const review = await cursor.toArray();
     res.send(review);
   });
+//post api for usercollection
+  app.post('/user', async (req, res) => {
+    const user = req.body;
+    const result = await userCollection.insertOne(user);
+    // console.log(result);
+    res.json(result);
+});
+//put api for usercollection
+app.put('/user', async (req, res) => {
+    const user = req.body;
+    const filter = { email: user.email };
+    const options = { upsert: true };
+    const updateDoc = { $set: user };
+    const result = await userCollection.updateOne(filter, updateDoc, options);
+    res.json(result);
+});
 
     } finally {
     //   await client.close();
