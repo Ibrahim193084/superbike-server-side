@@ -21,19 +21,36 @@ async function run() {
       await client.connect();
       const database = client.db("superbike");
       const cycleCollection = database.collection("cycle");
-       //Get api for cycle collection
+      const orderCollection = database.collection("order")
+       //Get api for cyclecollection
        app.get('/cycles', async(req, res)=>{
         const cursor = cycleCollection.find({});
         const cycles = await cursor.toArray();
         res.send(cycles)
     })
-        //Get single api  for cycle collection
+        //Get single api  for cyclecollection
         app.get('/cycles/:id', async (req, res)=>{
             const id = req.params.id;
             const query = {_id: ObjectId(id)}
             const cycles = await cycleCollection.findOne(query)
             res.send(cycles);
         })
+
+
+
+
+ //Post api for ordercollection
+  app.post('/order', async (req, res) => {
+    const newOrder = req.body;
+    const order = await orderCollection.insertOne(newOrder);
+    res.send(order)
+});
+ //Get api for ordercollection
+ app.get('/order', async (req, res) =>{
+  const cursor = orderCollection.find({});
+  const order = await cursor.toArray();
+  res.send(order);
+});
 
 
      
