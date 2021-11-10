@@ -37,6 +37,12 @@ async function run() {
             const cycles = await cycleCollection.findOne(query)
             res.send(cycles);
         })
+        //Post api for add new product
+  app.post('/cycle', async (req, res) => {
+    const newCycle = req.body;
+    const cycle = await cycleCollection.insertOne(newCycle);
+    res.send(cycle)
+});
 
 
 
