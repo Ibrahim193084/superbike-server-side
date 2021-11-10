@@ -108,6 +108,17 @@ app.put('/user/admin', async (req, res) => {
     const result = await userCollection.updateOne(filter, updateDoc);
  res.json(result);
 })
+//get api for check admin
+app.get('/user/:email', async (req, res) => {
+    const email = req.params.email;
+    const query = { email: email };
+    const user = await userCollection.findOne(query);
+    let isAdmin = false;
+    if (user?.role === 'admin') {
+        isAdmin = true;
+    }
+    res.json({ admin: isAdmin });
+})
 
     } finally {
     //   await client.close();
