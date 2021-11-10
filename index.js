@@ -80,7 +80,7 @@ app.put('/order/:id', async (req, res) => {
     const options = { upsert: true };
     const updateDoc = {
         $set: {
-           status: "shipped"
+           status: "Shipped"
         },
     };
     const result = await orderCollection.updateOne(filter, updateDoc, options)
