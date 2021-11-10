@@ -43,6 +43,13 @@ async function run() {
     const cycle = await cycleCollection.insertOne(newCycle);
     res.send(cycle)
 });
+    //delete api for delete products
+app.delete('/cycle/:id', async(req, res)=>{
+    const id = req.params.id;
+    const qurey = {_id: ObjectId(id)};
+    const result = await cycleCollection.deleteOne(qurey)
+    res.json(result);
+  })
 
 
 
