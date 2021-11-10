@@ -53,8 +53,11 @@ async function run() {
 });
 // email filter
 app.get('/order', async (req, res) => {
+    let query = {}
     const email = req.query.email;
-    const query = { email: email }
+    if(email){
+        query = {email: email}
+    }
     const cursor = orderCollection.find(query);
     const orders = await cursor.toArray();
     res.json(orders);
